@@ -9,7 +9,6 @@ import com.hijackster99.core.render.Screen;
 public abstract class Button {
 
 	private Polygon shape;
-	private Point mouseLocation;
 	
 	public Button(Polygon shape, Point location) {
 		this.shape = shape;
@@ -18,11 +17,7 @@ public abstract class Button {
 	
 	public abstract void render(Screen mainScreen, List<Screen> subScreens);
 	
-	public void update(Point mouseLocation) {
-		this.mouseLocation = mouseLocation;
-	}
-	
-	public boolean isHovered() {
+	public boolean isHovered(Point mouseLocation) {
 		return getShape().contains(mouseLocation);
 	}
 	

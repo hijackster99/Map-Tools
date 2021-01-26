@@ -8,8 +8,11 @@ import com.hijackster99.core.render.Screen;
 
 public class SettingsMenu extends GameState {
 
-	public SettingsMenu(String name) {
+	private String loadMenu;
+	
+	public SettingsMenu(String name, String loadMenu) {
 		super(name);
+		this.loadMenu = loadMenu;
 	}
 
 	@Override

@@ -3,8 +3,11 @@ package com.hijackster99.core.gamestates;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Polygon;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import com.hijackster99.core.GameState;
 import com.hijackster99.core.StateManager;
@@ -85,7 +88,7 @@ public class MainMenu extends GameState {
 
 			@Override
 			public void click() {
-				
+				StateManager.INSTANCE.loadState("settings_main");
 			}
 			
 		};
@@ -108,7 +111,17 @@ public class MainMenu extends GameState {
 
 	@Override
 	public void handleInput(InputEvent event) {
-		
+		if(event.getMousePressed().containsKey(MouseEvent.BUTTON1) && event.getMouseReleased().containsKey(MouseEvent.BUTTON1)) {
+			Object obj = event.getMousePressed().get(MouseEvent.BUTTON1).getSource();
+			if(obj instanceof JFrame) {
+				JFrame frame = (JFrame) obj;
+				Point scaledMouseLocation = new Point((int)((event.getMouseLocation().x/(double)frame.getWidth())*2560), (int)((event.getMouseLocation().y/(double) frame.getHeight())*1440));
+				if(leftArrow.isHovered(scaledMouseLocation)) leftArrow.click();
+				else if(rightArrow.isHovered(scaledMouseLocation)) rightArrow.click();
+				else if(map.isHovered(scaledMouseLocation)) map.click();
+				else if(settings.isHovered(scaledMouseLocation)) settings.click();
+			}
+		}
 	}
 
 }

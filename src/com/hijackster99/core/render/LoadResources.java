@@ -20,7 +20,7 @@ public class LoadResources {
 		tiles = new ArrayList<BufferedImage>();
 		File file = new File(System.getProperty("user.dir") + "/bin/com/hijackster99/resources/maps");
 		for(String fileName : file.list()) {
-			if(fileName.endsWith(".png") || fileName.endsWith(".jpeg")) {
+			if(fileName.endsWith(".png") || fileName.endsWith(".jpg")) {
 				try {
 					BufferedImage image = ImageIO.read(file.listFiles(new FilenameFilter() {
 

@@ -44,8 +44,9 @@ public class StateManager {
 	
 	public static void create() {
 		GameState menu = new MainMenu("default");
-		GameState settings = new SettingsMenu("settings");
+		GameState settingsMain = new SettingsMenu("settings_main", "default");
+		GameState settingsGame = new SettingsMenu("settings_game", "game");
 		GameState mainState = new MainState("game");
-		INSTANCE = new StateManager(menu, settings, mainState);
+		INSTANCE = new StateManager(menu, settingsMain, settingsGame, mainState);
 	}
 }
