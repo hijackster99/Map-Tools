@@ -65,7 +65,7 @@ public class MainMenu extends GameState {
 
 			@Override
 			public void render(Screen mainScreen, List<Screen> subScreens) {
-				BufferedImage image = LoadResources.getMaps().get(currentMap);
+				BufferedImage image = LoadResources.getMaps().get(currentMap).getImage();
 				mainScreen.drawImage(image, 1130, 570, 1430, 870, 0, 0, image.getWidth(), image.getHeight(), null);
 			}
 
