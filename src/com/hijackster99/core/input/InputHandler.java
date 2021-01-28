@@ -44,12 +44,12 @@ public class InputHandler implements KeyListener, MouseListener, MouseMotionList
 
 	@Override
 	public void mouseDragged(MouseEvent event) {
-		this.event.mouseLocation = event.getLocationOnScreen();
+		this.event.mouseLocation = event.getPoint();
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent event) {
-		this.event.mouseLocation = event.getLocationOnScreen();
+		this.event.mouseLocation = event.getPoint();
 	}
 
 	@Override

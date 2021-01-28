@@ -12,6 +12,7 @@ import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.awt.geom.PathIterator;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
@@ -241,6 +242,11 @@ public class Screen {
 	
 	public void fill(Shape shape) {
 		graphics.fill(shape);
+	}
+	
+	public void fill(Polygon shape, Point location) {
+		shape.translate(location.x, location.y);
+		graphics.fillPolygon(shape);
 	}
 	
 	public void paintBrush(int width, Point p1, Point p2) {

@@ -1,8 +1,5 @@
 package com.hijackster99.core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hijackster99.core.input.InputHandler;
 import com.hijackster99.core.render.Screen;
 
@@ -11,7 +8,6 @@ public class MapTools {
 	public static MapTools INSTANCE;
 	
 	private Screen mainScreen;
-	private List<Screen> subScreens;
 	private boolean running = false;
 	private Settings settings;
 	private int framerate;
@@ -20,7 +16,6 @@ public class MapTools {
 	public MapTools(Settings settings) {
 		this.settings = settings;
 		framerate = settings.getFramerate();
-		subScreens = new ArrayList<Screen>();
 		if(settings.isFullscreen()) mainScreen = new Screen("Map Tools");
 		else mainScreen = new Screen("Map Tools", settings.getX(), settings.getY(), settings.getWidth(), settings.getHeight(), true);
 	}
@@ -37,11 +32,8 @@ public class MapTools {
 			double currentTime = System.nanoTime();
 			if(prevFrameTime + frameTime < currentTime) {
 				prevFrameTime = currentTime;
-				currentState.render(mainScreen, subScreens);
+				currentState.render(mainScreen);
 				mainScreen.render();
-				for(Screen s : subScreens) {
-					s.render();
-				}
 			}
 			if(prevTickTime + tickTime < currentTime) {
 				prevTickTime = currentTime;
@@ -51,17 +43,6 @@ public class MapTools {
 					currentState = StateManager.INSTANCE.getCurrentState();
 				}
 			}
-		}
-	}
-	
-	public void addScreen(Screen screen) {
-		subScreens.add(screen);
-	}
-	
-	public void closeScreen(Screen screen) {
-		if(subScreens.contains(screen)) {
-			screen.close();
-			subScreens.remove(screen);
 		}
 	}
 	

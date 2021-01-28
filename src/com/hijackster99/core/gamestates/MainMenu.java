@@ -5,7 +5,6 @@ import java.awt.Point;
 import java.awt.Polygon;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 import javax.swing.JFrame;
 
@@ -30,9 +29,9 @@ public class MainMenu extends GameState {
 		rightArrow = new Button(new Polygon(new int[] {0, 50, 0}, new int[] {0, 100, 200}, 3), new Point(1460, 620)) {
 
 			@Override
-			public void render(Screen mainScreen, List<Screen> subScreens) {
+			public void render(Screen mainScreen) {
 				mainScreen.setColor(Color.LIGHT_GRAY);
-				mainScreen.fill(getShape());
+				mainScreen.fillArea(new Point[] {new Point(0, 0), new Point(50, 100), new Point(0, 200)}, 1460, 620);
 				mainScreen.setColor(Color.DARK_GRAY);
 				mainScreen.fillArea(new Point[] {new Point(10, 40), new Point(40, 100), new Point(10, 160)}, 1460, 620);
 			}
@@ -47,9 +46,9 @@ public class MainMenu extends GameState {
 		leftArrow = new Button(new Polygon(new int[] {50, 0, 50}, new int[] {0, 100, 200}, 3), new Point(1050, 620)) {
 
 			@Override
-			public void render(Screen mainScreen, List<Screen> subScreens) {
+			public void render(Screen mainScreen) {
 				mainScreen.setColor(Color.LIGHT_GRAY);
-				mainScreen.fill(getShape());
+				mainScreen.fillArea(new Point[] {new Point(50, 0), new Point(0, 100), new Point(50, 200)}, 1050, 620);
 				mainScreen.setColor(Color.DARK_GRAY);
 				mainScreen.fillArea(new Point[] {new Point(40, 40), new Point(10, 100), new Point(40, 160)}, 1050, 620);
 			}
@@ -64,7 +63,7 @@ public class MainMenu extends GameState {
 		map = new Button(new Polygon(new int[] {0, 300, 0, 300}, new int[] {0, 0, 300, 300}, 4), new Point(450, 620)) {
 
 			@Override
-			public void render(Screen mainScreen, List<Screen> subScreens) {
+			public void render(Screen mainScreen) {
 				BufferedImage image = LoadResources.getMaps().get(currentMap).getImage();
 				mainScreen.drawImage(image, 1130, 570, 1430, 870, 0, 0, image.getWidth(), image.getHeight(), null);
 			}
@@ -79,7 +78,7 @@ public class MainMenu extends GameState {
 		settings = new Button(new Polygon(new int[] {0, 25, 0, 25}, new int[] {0, 0, 25, 25}, 4), new Point(10, 10)) {
 
 			@Override
-			public void render(Screen mainScreen, List<Screen> subScreens) {
+			public void render(Screen mainScreen) {
 				mainScreen.setColor(Color.DARK_GRAY);
 				mainScreen.paintBrush(5, new Point(10, 10), new Point(35, 10));
 				mainScreen.paintBrush(5, new Point(10, 20), new Point(35, 20));
@@ -100,13 +99,13 @@ public class MainMenu extends GameState {
 	}
 
 	@Override
-	public void render(Screen mainScreen, List<Screen> subScreens) {
+	public void render(Screen mainScreen) {
 		mainScreen.setColor(Color.BLACK);
 		mainScreen.fillRect(0, 0, 2560, 1440);
-		leftArrow.render(mainScreen, subScreens);
-		rightArrow.render(mainScreen, subScreens);
-		map.render(mainScreen, subScreens);
-		settings.render(mainScreen, subScreens);
+		leftArrow.render(mainScreen);
+		rightArrow.render(mainScreen);
+		map.render(mainScreen);
+		settings.render(mainScreen);
 	}
 
 	@Override
@@ -115,7 +114,8 @@ public class MainMenu extends GameState {
 			Object obj = event.getMousePressed().get(MouseEvent.BUTTON1).getSource();
 			if(obj instanceof JFrame) {
 				JFrame frame = (JFrame) obj;
-				Point scaledMouseLocation = new Point((int)((event.getMouseLocation().x/(double)frame.getWidth())*2560), (int)((event.getMouseLocation().y/(double) frame.getHeight())*1440));
+				Point scaledMouseLocation = new Point((int)((event.getMouseLocation().x/(double)frame.getWidth())*2560) - 8, (int)((event.getMouseLocation().y/(double) frame.getHeight())*1440) - 31);
+				System.out.println(scaledMouseLocation);
 				if(leftArrow.isHovered(scaledMouseLocation)) leftArrow.click();
 				else if(rightArrow.isHovered(scaledMouseLocation)) rightArrow.click();
 				else if(map.isHovered(scaledMouseLocation)) map.click();
